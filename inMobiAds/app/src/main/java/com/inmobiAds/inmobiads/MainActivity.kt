@@ -5,6 +5,10 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.inmobi.ads.AdMetaInfo
+import com.inmobi.ads.InMobiAdRequestStatus
+import com.inmobi.ads.InMobiInterstitial
+import com.inmobi.ads.listeners.InterstitialAdEventListener
 import com.inmobi.sdk.InMobiSdk
 import com.inmobi.sdk.SdkInitializationListener
 import com.inmobiAds.inmobiads.BannerAds
@@ -13,7 +17,7 @@ import org.json.JSONException
 import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
-
+    private var interstitialAd: InMobiInterstitial? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,10 +53,55 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, BannerAds::class.java)
             startActivity(intent)
         }
+        btn1.setOnClickListener {
+            // Initialize InMobiInterstitial if not already initialized
+            if (interstitialAd == null) {
+                interstitialAd = InMobiInterstitial(this@MainActivity, 1700682378384, CustomInterstitialAdEventListener())
+            }
 
-//        btn1.setOnClickListener{
-//            val intent = Intent(this, InterAds::class.java)
-//            startActivity(intent)
-//        }
+            // Load the interstitial ad
+            interstitialAd?.load()
+
+            // Show the ad only if it is in a ready state
+            if (interstitialAd?.isReady == true) {
+                interstitialAd?.show()
+            }
+        }
     }
 }
+
+
+
+    class CustomInterstitialAdEventListener : InterstitialAdEventListener() {
+
+    override fun onAdFetchFailed(ad: InMobiInterstitial, status: InMobiAdRequestStatus){
+            Log.d("InterAdTAG","Fetch Failed!");Log.d("InterAdTAG","Fetch Failed!");
+    }
+
+    override fun onAdWillDisplay(ad: InMobiInterstitial) {
+        Log.d("InterAdTAG","on will Displayed!");
+    }
+
+    override fun onAdDisplayed(ad: InMobiInterstitial, info: AdMetaInfo) {
+        Log.d("InterAdTAG","on Displayed!");
+    }
+
+    override fun onAdDisplayFailed(ad: InMobiInterstitial) {
+        Log.d("InterAdTAG","On Display Failed!");
+    }
+
+    override fun onAdDismissed(ad: InMobiInterstitial) {
+        Log.d("InterAdTAG","Ad Dismissed!");
+    }
+
+    override fun onUserLeftApplication(ad: InMobiInterstitial) {
+        Log.d("InterAdTAG","User Left Application!");
+    }
+
+    override fun onAdImpression(ad: InMobiInterstitial) {
+        Log.d("InterAdTAG","Ad Impression!");
+    }
+
+
+}
+
