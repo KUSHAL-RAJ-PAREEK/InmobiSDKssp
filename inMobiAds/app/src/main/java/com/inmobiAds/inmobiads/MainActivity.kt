@@ -18,6 +18,7 @@ import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private var interstitialAd: InMobiInterstitial? = null
+    private var rewardedAd: InMoBIR
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         val btn = findViewById<Button>(R.id.btn)
         val btn1 = findViewById<Button>(R.id.btn1)
+        val btn2 = findViewById<Button>(R.id.btn2)
         btn.setOnClickListener {
             val intent = Intent(this, BannerAds::class.java)
             startActivity(intent)
@@ -67,6 +69,10 @@ class MainActivity : AppCompatActivity() {
                 interstitialAd?.show()
             }
         }
+        btn2.setOnClickListener{
+
+        }
+
     }
 }
 
