@@ -18,7 +18,6 @@ import org.json.JSONObject
 
 class MainActivity : AppCompatActivity() {
     private var interstitialAd: InMobiInterstitial? = null
-    private var rewardedAd: InMoBIR
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -70,7 +69,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         btn2.setOnClickListener{
-
+            NativeAdsActivity()
+//            val intent = Intent(this, NativeAdsActivity::class.java)
+//            startActivity(intent)
         }
 
     }
